@@ -69,7 +69,9 @@ function ProcessFiles ($folder, $copyAction) {
                 $created = new-item -itemtype directory -path $destinationFolderPath
             }
  
-            Write-Verbose "Processing Path : $phoneName\$phoneFolderPath"
+            Write-Host "Processing Path : $phoneName\$phoneFolderPath $folder"
+    
+            Write-Verbose "Processing Path : $phoneName\$phoneFolderPath $folder"
             if ($copyAction -eq "MoveAndDelete") {
                 Write-Host "Moving to : $destinationFolderPath"
             } else {
@@ -96,7 +98,8 @@ function ProcessFiles ($folder, $copyAction) {
                 $targetFilePath = join-path -path $destinationFolderPath -childPath $fileName
                 if (test-path -path $targetFilePath)
                 {
-                    write-error "Destination file exists - file not moved:`n`t$targetFilePath"
+                    write-host "Destination file exists - file not moved:`n`t$targetFilePath $fileName" -ForegroundColor Red
+                    #write-error "Destination file exists - file not moved:`n`t$targetFilePath"
                 }
                 else
                 {
@@ -111,7 +114,8 @@ function ProcessFiles ($folder, $copyAction) {
                     }
                     else
                     {
-                        write-error "Failed to move file to destination:`n`t$targetFilePath"
+                        write-host "Failed to move file to destination:`n`t$targetFilePath" -ForegroundColor Red
+                        #write-error "Failed to move file to destination:`n`t$targetFilePath"
                     }
                 }
             }
